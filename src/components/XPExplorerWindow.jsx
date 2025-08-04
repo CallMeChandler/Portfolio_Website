@@ -1,10 +1,13 @@
-// XPExplorerWindow.jsx
 import { Rnd } from "react-rnd";
 import "../styles/XPExplorerWindow.css";
 
-export default function XPExplorerWindow({ title, onClose, sections, folders }) {
+export default function XPExplorerWindow({ title, onClose, sections = [], folders = [] }) {
+    const hasSections = Array.isArray(sections) && sections.length > 0;
+    const hasFolders = Array.isArray(folders) && folders.length > 0;
+
 
     console.log("XPExplorerWindow rendered for:", title);
+
     return (
         <Rnd
             default={{ x: 150, y: 100, width: 750, height: 500 }}
@@ -13,7 +16,7 @@ export default function XPExplorerWindow({ title, onClose, sections, folders }) 
             bounds="parent"
             className="explorer-window"
         >
-            {/* XP-style top bar */}
+            {/* Top blue bar */}
             <div className="bg-blue-700 text-white flex justify-between items-center px-2 py-1 text-sm font-bold">
                 <span className="flex gap-2 items-center">
                     <img src="/assets/Folder.png" alt="folder" className="w-4 h-4" />
@@ -22,6 +25,7 @@ export default function XPExplorerWindow({ title, onClose, sections, folders }) 
                 <button onClick={onClose} className="hover:bg-red-600 px-2">✕</button>
             </div>
 
+            {/* Menu bar */}
             <div className="explorer-menubar">
                 <span>File</span>
                 <span>Edit</span>
@@ -31,37 +35,20 @@ export default function XPExplorerWindow({ title, onClose, sections, folders }) 
                 <span>Help</span>
             </div>
 
-            {/* Toolbar with XP-style buttons */}
+            {/* Toolbar */}
             <div className="explorer-toolbar">
-                <button className="toolbar-btn">
-                    <img src="/assets/Back.png" alt="Back" />
-                </button>
-                <button className="toolbar-btn">
-                    <img src="/assets/Forward.png" alt="Forward" />
-                </button>
+                <button className="toolbar-btn"><img src="/assets/Back.png" alt="Back" /></button>
+                <button className="toolbar-btn"><img src="/assets/Forward.png" alt="Forward" /></button>
                 <div className="toolbar-divider" />
-
-                <button className="toolbar-btn">
-                    <img src="/assets/Up.png" alt="Up" />
-                </button>
+                <button className="toolbar-btn"><img src="/assets/Up.png" alt="Up" /></button>
                 <div className="toolbar-divider" />
-
-                <button className="toolbar-btn">
-                    <img src="/assets/Search.png" alt="Search" />
-                    <span>Search</span>
-                </button>
-                <button className="toolbar-btn">
-                    <img src="/assets/Folder.png" alt="Folders" />
-                    <span>Folders</span>
-                </button>
+                <button className="toolbar-btn"><img src="/assets/Search.png" alt="Search" /><span>Search</span></button>
+                <button className="toolbar-btn"><img src="/assets/Folder.png" alt="Folders" /><span>Folders</span></button>
                 <div className="toolbar-divider" />
-
-                <button className="toolbar-btn">
-                    <img src="/assets/Views.png" alt="Views" />
-                    <span>Views</span>
-                </button>
+                <button className="toolbar-btn"><img src="/assets/Views.png" alt="Views" /><span>Views</span></button>
             </div>
 
+            {/* Address bar */}
             <div className="address-bar">
                 <label htmlFor="address" className="address-label">Address</label>
                 <div className="address-input-wrapper">
@@ -76,7 +63,7 @@ export default function XPExplorerWindow({ title, onClose, sections, folders }) 
                 </div>
             </div>
 
-
+            {/* Body */}
             <div className="explorer-body">
                 {/* Sidebar */}
                 <div className="sidebar">
@@ -108,57 +95,35 @@ export default function XPExplorerWindow({ title, onClose, sections, folders }) 
                     </div>
                 </div>
 
-                {/* Main Folder Display */}
+                {/* Main Content */}
                 <div className="explorer-content">
-                    {/* Render sections if available */}
-                    {sections && sections.map((section, idx) => (
-                        <div key={idx} className="explorer-section">
-                            <h3 className="section-title">{section.title}</h3>
-                            <div className="folder-grid">
-                                {section.folders.map((folder, index) => (
-                                    <a
-                                        key={index}
-                                        href={folder.url || "#"}
-                                        target={folder.url ? "_blank" : "_self"}
-                                        rel="noreferrer"
-                                        className="folder"
-                                    >
-                                        <img
-                                            src={folder.icon || "/assets/Folder.png"}
-                                            alt={folder.name}
-                                            className="folder-icon"
-                                        />
-                                        <span>{folder.name}</span>
-                                    </a>
-                                ))}
+                    {hasSections ? (
+                        sections.map((section, idx) => (
+                            <div key={idx} className="explorer-section">
+                                <h3 className="section-title">{section.title}</h3>
+                                <div className="folder-grid">
+                                    {section.folders.map((folder, index) => (
+                                        <a key={index} href={folder.url || "#"} target="_blank" rel="noreferrer" className="folder">
+                                            <img src={folder.icon || "/assets/Folder.png"} alt={folder.name} className="folder-icon" />
+                                            <span>{folder.name}</span>
+                                        </a>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-
-                    {/* Fallback to folders if sections not present */}
-                    {!sections && folders && (
+                        ))
+                    ) : hasFolders && (
                         <div className="folder-grid">
                             {folders.map((folder, index) => (
-                                <a
-                                    key={index}
-                                    href={folder.url || "#"}
-                                    target={folder.url ? "_blank" : "_self"}
-                                    rel="noreferrer"
-                                    className="folder"
-                                >
-                                    <img
-                                        src={folder.icon || "/assets/Folder.png"}
-                                        alt={folder.name}
-                                        className="folder-icon"
-                                    />
+                                <a key={index} href={folder.url || "#"} target="_blank" rel="noreferrer" className="folder">
+                                    <img src={folder.icon || "/assets/Folder.png"} alt={folder.name} className="folder-icon" />
                                     <span>{folder.name}</span>
                                 </a>
                             ))}
                         </div>
                     )}
 
-                </div>
 
+                </div>
             </div>
         </Rnd>
     );

@@ -121,7 +121,13 @@ export default function Desktop() {
                     label={item.label}
                     x={item.x}
                     y={item.y}
-                    onDoubleClick={() => handleOpenWindow(item.window)}
+                    onDoubleClick={() => {
+                        if (item.window) {
+                            handleOpenWindow(item.window);
+                        } else if (item.action) {
+                            item.action();
+                        }
+                    }}
                 />
             ))}
 
@@ -160,13 +166,23 @@ export default function Desktop() {
 
             {openWindow === "skills" && (
                 <XPExplorerWindow
-                    title="My Skills"
-                    folders={[
-                        { name: "Full Stack Dev", icon: "/assets/icons/skills.png" },
-                        { name: "ML / Data", icon: "/assets/icons/skills.png" },
-                        { name: "Automation", icon: "/assets/icons/skills.png" },
+                    title="Skills"
+                    onClose={handleCloseWindow}
+                    sections={[
+                        {
+                            title: "Tech Stack",
+                            folders: [
+                                { name: "React", icon: "/assets/icons/react.png" },
+                                { name: "Node.js", icon: "/assets/icons/node.png" },
+                            ],
+                        },
+                        {
+                            title: "Automation",
+                            folders: [
+                                { name: "Zapier", icon: "/assets/icons/zapier.png" },
+                            ],
+                        },
                     ]}
-                    onClose={() => setOpenWindow(null)}
                 />
             )}
 

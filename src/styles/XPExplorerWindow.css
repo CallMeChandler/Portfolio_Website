@@ -285,13 +285,6 @@
   gap: 20px;
 }
 
-.folder {
-  width: 100px;
-  text-align: center;
-  font-size: 12px;
-  cursor: pointer;
-}
-
 .folder-icon {
   width: 64px;
   height: 64px;
