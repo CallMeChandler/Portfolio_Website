@@ -1,12 +1,19 @@
 import { Rnd } from "react-rnd";
 import "../styles/XPExplorerWindow.css";
 
-export default function XPExplorerWindow({ title, onClose, sections = [], folders = [] }) {
-    const hasSections = Array.isArray(sections) && sections.length > 0;
-    const hasFolders = Array.isArray(folders) && folders.length > 0;
+export default function XPExplorerWindow({ title, onClose, sections = [], folders = null }) {
 
 
-    console.log("XPExplorerWindow rendered for:", title);
+
+    console.log("🔥 Rendering XPExplorerWindow", {
+        title,
+        hasSections: Array.isArray(sections) && sections.length > 0,
+        hasFolders: Array.isArray(folders) && folders.length > 0,
+        sections,
+        folders,
+    });
+
+
 
     return (
         <Rnd
@@ -15,6 +22,7 @@ export default function XPExplorerWindow({ title, onClose, sections = [], folder
             minHeight={400}
             bounds="parent"
             className="explorer-window"
+            style={{ display: 'flex', flexDirection: 'column' }}
         >
             {/* Top blue bar */}
             <div className="bg-blue-700 text-white flex justify-between items-center px-2 py-1 text-sm font-bold">
@@ -97,33 +105,56 @@ export default function XPExplorerWindow({ title, onClose, sections = [], folder
 
                 {/* Main Content */}
                 <div className="explorer-content">
-                    {hasSections ? (
-                        sections.map((section, idx) => (
-                            <div key={idx} className="explorer-section">
-                                <h3 className="section-title">{section.title}</h3>
-                                <div className="folder-grid">
-                                    {section.folders.map((folder, index) => (
-                                        <a key={index} href={folder.url || "#"} target="_blank" rel="noreferrer" className="folder">
-                                            <img src={folder.icon || "/assets/Folder.png"} alt={folder.name} className="folder-icon" />
-                                            <span>{folder.name}</span>
-                                        </a>
-                                    ))}
+                    {sections && sections.length > 0 && (
+                        <>
+                            {sections.map((section, idx) => (
+                                <div key={idx} className="explorer-section">
+                                    <h3 className="section-title">{section.title}</h3>
+                                    <div className="folder-grid">
+                                        {section.folders.map((folder, index) => (
+                                            <a
+                                                key={index}
+                                                href={folder.url || "#"}
+                                                target={folder.url ? "_blank" : "_self"}
+                                                rel="noreferrer"
+                                                className="folder"
+                                            >
+                                                <img
+                                                    src={folder.icon || "/assets/Folder.png"}
+                                                    alt={folder.name}
+                                                    className="folder-icon"
+                                                />
+                                                <span>{folder.name}</span>
+                                            </a>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        ))
-                    ) : hasFolders && (
+                            ))}
+                        </>
+                    )}
+
+                    {(!sections || sections.length === 0) && folders && folders.length > 0 && (
                         <div className="folder-grid">
                             {folders.map((folder, index) => (
-                                <a key={index} href={folder.url || "#"} target="_blank" rel="noreferrer" className="folder">
-                                    <img src={folder.icon || "/assets/Folder.png"} alt={folder.name} className="folder-icon" />
+                                <a
+                                    key={index}
+                                    href={folder.url || "#"}
+                                    target={folder.url ? "_blank" : "_self"}
+                                    rel="noreferrer"
+                                    className="folder"
+                                >
+                                    <img
+                                        src={folder.icon || "/assets/Folder.png"}
+                                        alt={folder.name}
+                                        className="folder-icon"
+                                    />
                                     <span>{folder.name}</span>
                                 </a>
                             ))}
                         </div>
                     )}
-
-
                 </div>
+
             </div>
         </Rnd>
     );

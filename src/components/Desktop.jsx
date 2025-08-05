@@ -16,11 +16,13 @@ export default function Desktop() {
     }, [openWindow]);
 
     const handleOpenWindow = (id) => {
+        console.log("👀 handleOpenWindow called with:", id);
         if (openWindow !== id) {
-            console.log("✅ Opening window:", id);
+            console.log("✅ Actually setting:", id);
             setOpenWindow(id);
         }
     };
+
 
     const handleCloseWindow = () => {
         console.log("✖ Closing window");
@@ -170,21 +172,50 @@ export default function Desktop() {
                     onClose={handleCloseWindow}
                     sections={[
                         {
-                            title: "Tech Stack",
+                            title: "Languages and Frameworks",
                             folders: [
-                                { name: "React", icon: "/assets/icons/react.png" },
-                                { name: "Node.js", icon: "/assets/icons/node.png" },
+                                { name: "Python", icon: "/assets/Python.png", url: "" },
+                                { name: "C++", icon: "/assets/C++.png", url: "" },
+                                { name: "C", icon: "/assets/C.png", url: "" },
+                                { name: "JavaScript", icon: "/assets/JS.png", url: "" },
+                                { name: "SQL", icon: "/assets/SQL.png", url: "" },
+                                { name: "React", icon: "/assets/React.png", url: "" },
+                                { name: "Express", icon: "/assets/Express.png", url: "" },
+                                { name: "MongoDB", icon: "/assets/mongoDB.png", url: "" },
+                                { name: "Tailwind", icon: "/assets/Tailwind.png", url: "" },
+                                { name: "HTML5", icon: "/assets/html5.png", url: "" },
+                                { name: "CSS3", icon: "/assets/css3.png", url: "" },
+                                { name: "sci-kit learn", icon: "/assets/scikitln.png", url: "" },
                             ],
                         },
                         {
-                            title: "Automation",
+                            title: "Developer and Design Tools",
                             folders: [
-                                { name: "Zapier", icon: "/assets/icons/zapier.png" },
+                                { name: "VS Code", icon: "/assets/VScode.png", url: "" },
+                                { name: "PyCharm", icon: "/assets/PyCharm.png", url: "" },
+                                { name: "Git", icon: "/assets/git.png", url: "" },
+                                { name: "Vercel", icon: "/assets/Vercel.jpeg", url: "" },
+                                { name: "Render", icon: "/assets/Render.jpg", url: "" },
+                                { name: "Figma", icon: "/assets/Figma.png", url: "" },
+                                { name: "Canva", icon: "/assets/Canva.png", url: "" },
+                            ],
+                        },
+                        {
+                            title: "Workflow and Sales Automation Tools",
+                            folders: [
+                                { name: "Zapier", icon: "/assets/Zapier.png", url: "" },
+                                { name: "Make", icon: "/assets/Make.png", url: "" },
+                                { name: "n8n", icon: "/assets/n8n.png", url: "" },
+                                { name: "Clay", icon: "/assets/Clay.png", url: "" },
+                                { name: "Mailchimp", icon: "/assets/Mailchimp.png", url: "" },
+                                { name: "HubSpot", icon: "/assets/HubSpot.png", url: "" },
                             ],
                         },
                     ]}
+                    folders={undefined} // 👈 VERY IMPORTANT to prevent fallback render
                 />
             )}
+
 
             {openWindow === "photos" && (
                 <XPExplorerWindow
