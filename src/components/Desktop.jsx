@@ -1,5 +1,5 @@
 import DesktopIcon from "./DesktopIcon.jsx";
-// import ResumeWindow from "./windows/ResumeWindow";
+import ResumeWindow from "./ResumeWindow.jsx";
 // import AboutWindow from "./windows/AboutWindow";
 import ContactWindow from "./ContactWindow.jsx";
 import XPExplorerWindow from "./XPExplorerWindow.jsx";
@@ -234,6 +234,10 @@ export default function Desktop() {
 
             {openWindow === "contact" && (
                 <ContactWindow onClose={handleCloseWindow} />
+            )}
+
+            {openWindow === "resume" && (
+                <ResumeWindow onClose={handleCloseWindow} />
             )}
 
 
