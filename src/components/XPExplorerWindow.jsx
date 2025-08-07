@@ -1,7 +1,8 @@
 import { Rnd } from "react-rnd";
 import "../styles/XPExplorerWindow.css";
+import Games from "./Games";
 
-export default function XPExplorerWindow({ title, onClose, sections = [], folders = null }) {
+export default function XPExplorerWindow({ title, onClose, sections = [], folders = null, customContent = null, onGameLaunch }) {
 
 
 
@@ -12,7 +13,6 @@ export default function XPExplorerWindow({ title, onClose, sections = [], folder
         sections,
         folders,
     });
-
 
 
     return (
@@ -105,19 +105,23 @@ export default function XPExplorerWindow({ title, onClose, sections = [], folder
 
                 {/* Main Content */}
                 <div className="explorer-content">
-                    {sections && sections.length > 0 && (
+                    {customContent ? (
+                        customContent
+                    ) : sections && sections.length > 0 ? (
                         <>
                             {sections.map((section, idx) => (
                                 <div key={idx} className="explorer-section">
                                     <h3 className="section-title">{section.title}</h3>
                                     <div className="folder-grid">
                                         {section.folders.map((folder, index) => (
-                                            <a
+                                            <div
                                                 key={index}
-                                                href={folder.url || "#"}
-                                                target={folder.url ? "_blank" : "_self"}
-                                                rel="noreferrer"
                                                 className="folder"
+                                                onClick={() => {
+                                                    if (title === "Games" && onGameLaunch) {
+                                                        onGameLaunch(folder.id);
+                                                    }
+                                                }}
                                             >
                                                 <img
                                                     src={folder.icon || "/assets/Folder.png"}
@@ -125,35 +129,41 @@ export default function XPExplorerWindow({ title, onClose, sections = [], folder
                                                     className="folder-icon"
                                                 />
                                                 <span>{folder.name}</span>
-                                            </a>
+                                            </div>
                                         ))}
                                     </div>
                                 </div>
                             ))}
-                        </>
-                    )}
 
-                    {(!sections || sections.length === 0) && folders && folders.length > 0 && (
+                        </>
+                    ) : folders && folders.length > 0 ? (
                         <div className="folder-grid">
                             {folders.map((folder, index) => (
-                                <a
-                                    key={index}
-                                    href={folder.url || "#"}
-                                    target={folder.url ? "_blank" : "_self"}
-                                    rel="noreferrer"
-                                    className="folder"
-                                >
-                                    <img
-                                        src={folder.icon || "/assets/Folder.png"}
-                                        alt={folder.name}
-                                        className="folder-icon"
-                                    />
-                                    <span>{folder.name}</span>
-                                </a>
+                                folder.onClick ? (
+                                    <div key={index} className="folder" onClick={folder.onClick}>
+                                        <img src={folder.icon || "/assets/Folder.png"} alt={folder.name} className="folder-icon" />
+                                        <span>{folder.name}</span>
+                                    </div>
+                                ) : (
+                                    <a
+                                        key={index}
+                                        href={folder.url || "#"}
+                                        target={folder.url ? "_blank" : "_self"}
+                                        rel="noreferrer"
+                                        className="folder"
+                                    >
+                                        <img src={folder.icon || "/assets/Folder.png"} alt={folder.name} className="folder-icon" />
+                                        <span>{folder.name}</span>
+                                    </a>
+                                )
                             ))}
+
                         </div>
+                    ) : (
+                        <p>No content available</p>
                     )}
                 </div>
+
 
             </div>
         </Rnd>

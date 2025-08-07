@@ -1,12 +1,16 @@
 import DesktopIcon from "./DesktopIcon.jsx";
 // import ResumeWindow from "./windows/ResumeWindow";
 // import AboutWindow from "./windows/AboutWindow";
-// import ContactWindow from "./windows/ContactWindow";
+import ContactWindow from "./ContactWindow.jsx";
 import XPExplorerWindow from "./XPExplorerWindow.jsx";
+import Games from "./Games.jsx";
+import SnakeGame from "./SnakeGame.jsx";
 import { useState, useEffect } from "react";
 
 export default function Desktop() {
     const [openWindow, setOpenWindow] = useState(null);
+    const [openGame, setOpenGame] = useState(null);
+
     const handleExternalLink = (url) => {
         window.open(url, "_blank");
     };
@@ -228,15 +232,51 @@ export default function Desktop() {
                 />
             )}
 
+            {openWindow === "contact" && (
+                <ContactWindow onClose={handleCloseWindow} />
+            )}
+
+
+
             {openWindow === "games" && (
                 <XPExplorerWindow
                     title="Games"
-                    folders={[
-                        { name: "Coming Soon!", icon: "/assets/icons/game.png" },
+                    onClose={handleCloseWindow}
+                    sections={[
+                        {
+                            title: "Arcade Games",
+                            folders: [
+                                { name: "Tic Tac Toe", icon: "/assets/Tictactoe.png", id: "tictactoe" },
+                                { name: "Snake Game", icon: "/assets/snake.png", id: "snake" },
+                            ],
+                        },
                     ]}
-                    onClose={() => setOpenWindow(null)}
+                    folders={undefined} // Prevent fallback rendering
+                    onGameLaunch={(gameId) => setOpenWindow(gameId)}
                 />
             )}
+
+            {openWindow === "tictactoe" && (
+                <XPExplorerWindow
+                    title="Tic Tac Toe"
+                    onClose={handleCloseWindow}
+                    customContent={<Games />}
+                    sections={[]} // or undefined
+                    folders={undefined}
+                />
+            )}
+
+            {openWindow === "snake" && (
+                <XPExplorerWindow
+                    title="Snake"
+                    onClose={handleCloseWindow}
+                    customContent={<SnakeGame />}
+                    sections={[]} // or undefined
+                    folders={undefined}
+                />
+            )}
+
+
         </div>
     );
 }
