@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 
 export default function Desktop() {
     const [openWindow, setOpenWindow] = useState(null);
-    const [openGame, setOpenGame] = useState(null);
+
 
     const handleExternalLink = (url) => {
         window.open(url, "_blank");

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaWindows } from "react-icons/fa";
+import StartMenu from "./StartMenu";
 
 export default function Taskbar() {
   const [showStart, setShowStart] = useState(false);
@@ -14,14 +15,7 @@ export default function Taskbar() {
           <FaWindows className="text-lg" /> Start
         </button>
 
-        {showStart && (
-          <div className="absolute bottom-10 left-0 w-48 bg-white text-black shadow-lg border z-50">
-            <div className="p-2 border-b font-semibold bg-[#dbe9ff]">Aakarsh XP</div>
-            <div className="p-2 hover:bg-gray-200 cursor-pointer">👨‍💻 About Me</div>
-            <div className="p-2 hover:bg-gray-200 cursor-pointer">💼 Projects</div>
-            <div className="p-2 hover:bg-gray-200 cursor-pointer">📄 Resume</div>
-          </div>
-        )}
+        {showStart && <StartMenu />}
       </div>
 
       <div className="text-sm font-mono">
