@@ -6,6 +6,7 @@ import XPExplorerWindow from "./XPExplorerWindow.jsx";
 import Games from "./Games.jsx";
 import SnakeGame from "./SnakeGame.jsx";
 import { useState, useEffect } from "react";
+import WorkExperience from "./WorkExperience.jsx";
 
 export default function Desktop() {
     const [openWindow, setOpenWindow] = useState(null);
@@ -35,87 +36,101 @@ export default function Desktop() {
 
 
     const desktopItems = [
-        {
-            id: "about",
-            label: "About Me",
-            icon: "/assets/AboutMeIcon.png",
-            window: "about",
-            x: 80,
-            y: 80,
-        },
-        {
-            id: "resume",
-            label: "Resume",
-            icon: "/assets/ResumeIcon.png",
-            window: "resume",
-            x: 80,
-            y: 200,
-        },
-        {
-            id: "projects",
-            label: "Projects",
-            icon: "/assets/ProjectIcon.png",
-            window: "projects",
-            x: 80,
-            y: 320,
-        },
-        {
-            id: "skills",
-            label: "My Skills",
-            icon: "/assets/SkillsIcon.png",
-            window: "skills",
-            x: 80,
-            y: 440,
-        },
-        {
-            id: "contact",
-            label: "Contact",
-            icon: "/assets/ContactMe.png",
-            window: "contact",
-            x: 80,
-            y: 560,
-        },
-        {
-            id: "github",
-            label: "GitHub",
-            icon: "/assets/GithubIcon.png",
-            action: () => handleExternalLink("https://github.com/CallMeChandler"),
-            x: 200,
-            y: 80,
-        },
-        {
-            id: "leetcode",
-            label: "LeetCode",
-            icon: "/assets/LeetcodeIcon.png",
-            action: () => handleExternalLink("https://leetcode.com/u/ChandlerGoneHigh/"),
-            x: 200,
-            y: 200,
-        },
-        {
-            id: "linkedin",
-            label: "LinkedIn",
-            icon: "/assets/LinkedInIcon.png",
-            action: () => handleExternalLink("https://www.linkedin.com/in/aakarsh-agarwal-7579061a8/"),
-            x: 200,
-            y: 320,
-        },
-        {
-            id: "photos",
-            label: "Photos",
-            icon: "/assets/PhotosIcon.png",
-            window: "photos",
-            x: 200,
-            y: 440,
-        },
-        {
-            id: "games",
-            label: "Games",
-            icon: "/assets/GameIcon.png",
-            window: "games",
-            x: 200,
-            y: 560,
-        },
-    ];
+    // 1st column
+    {
+        id: "about",
+        label: "About Me",
+        icon: "/assets/AboutMeIcon.png",
+        window: "about",
+        x: 80,
+        y: 80,
+    },
+    {
+        id: "workexp",
+        label: "Work Experience",
+        icon: "/assets/WorkExp.png",
+        window: "experience",
+        x: 80,
+        y: 200,
+    },
+    {
+        id: "projects",
+        label: "Projects",
+        icon: "/assets/ProjectIcon.png",
+        window: "projects",
+        x: 80,
+        y: 320,
+    },
+    {
+        id: "skills",
+        label: "My Skills",
+        icon: "/assets/SkillsIcon.png",
+        window: "skills",
+        x: 80,
+        y: 440,
+    },
+    {
+        id: "resume",
+        label: "Resume",
+        icon: "/assets/ResumeIcon.png",
+        window: "resume",
+        x: 80,
+        y: 560,
+    },
+
+    // 2nd column
+    {
+        id: "github",
+        label: "GitHub",
+        icon: "/assets/GithubIcon.png",
+        action: () => handleExternalLink("https://github.com/CallMeChandler"),
+        x: 200,
+        y: 80,
+    },
+    {
+        id: "leetcode",
+        label: "LeetCode",
+        icon: "/assets/LeetcodeIcon.png",
+        action: () => handleExternalLink("https://leetcode.com/u/ChandlerGoneHigh/"),
+        x: 200,
+        y: 200,
+    },
+    {
+        id: "linkedin",
+        label: "LinkedIn",
+        icon: "/assets/LinkedInIcon.png",
+        action: () => handleExternalLink("https://www.linkedin.com/in/aakarsh-agarwal-7579061a8/"),
+        x: 200,
+        y: 320,
+    },
+    {
+        id: "photos",
+        label: "Photos",
+        icon: "/assets/PhotosIcon.png",
+        window: "photos",
+        x: 200,
+        y: 440,
+    },
+    {
+        id: "contact",
+        label: "Contact",
+        icon: "/assets/ContactMe.png",
+        window: "contact",
+        x: 200,
+        y: 560,
+    },
+
+    // 3rd column
+    {
+        id: "games",
+        label: "Games",
+        icon: "/assets/GameIcon.png",
+        window: "games",
+        x: 320,
+        y: 80,
+    },
+];
+
 
     return (
         <div className="w-screen h-screen relative bg-cover bg-center" style={{ backgroundImage: 'url(/assets/xp-bg.jpg)' }}>
@@ -239,6 +254,15 @@ export default function Desktop() {
             {openWindow === "resume" && (
                 <ResumeWindow onClose={handleCloseWindow} />
             )}
+
+            {openWindow === "experience" && (
+                <XPExplorerWindow
+                    title="Work Experience"
+                    onClose={handleCloseWindow}
+                    customContent={<WorkExperience />}
+                />
+            )}
+
 
 
 
